@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Guides</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tripguide.css">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+</head>
+
+
+<body>
+  <nav class="nav0">
+    <!-- Left side of navigation bar -->
+    <div class="nav0-leftside">
+
+      <img class="logo" src="images/logo.svg" alt="img" />
+
+
+    </div>
+
+    <!-- Right side of navigation bar -->
+
+  </nav>
+
+
+  <header id="tripG">
+
+    <div id="aa1" style="background-color: grey;">
+      <h1>Travel guides</h1>
+      <p>Where will you go next? Pick a destination.</p>
+    </div>
+  </header>
+
+
+
+
+  <div id="alltrips">
+    <p>Most Popular Destination's Trip Guide</p>
+  </div>
+
+
+
+
+  <div class="card-row1">
+
+
+    <div class="card1 ch">
+      <h2>Chennai</h2>
+      <p>Chennai Trip Guide</p>
+    </div>
+
+
+    <div class="card1 del">
+      <h2>Delhi</h2>
+      <p>New Dehi Trip Guide</p>
+    </div>
+
+
+    <div class="card1 mum">
+      <h2>Mumbai</h2>
+      <p>Mumbai Trip Guide</p>
+    </div>
+
+
+
+    <div class="card1 ban">
+      <h2>Bangaluru</h2>
+      <p>Bangaluru Trip Guide</p>
+    </div>
+
+  </div>
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="footer-col">
+          <h4>company</h4>
+          <ul>
+            <li>
+              <a href="./aboutus.html"> about us</a>
+            </li>
+            <li>
+              <a href="./services.html"> our services</a>
+            </li>
+            <li>
+              <a href="./business.html"> work with us</a>
+            </li>
+            <li>
+              <a href="#"> press key</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="footer-col">
+          <h4>get help</h4>
+          <ul>
+            <li>
+              <a href="./FAQ.html">FAQ</a>
+            </li>
+            <li>
+              <a href="./userdashboard.html">booking status</a>
+            </li>
+            <li>
+              <a href="#">returns</a>
+            </li>
+            <li>
+              <a href="#">payment options</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="footer-col">
+          <h4>learn more</h4>
+          <ul>
+            <li>
+              <a href="./learnmore.html">privacy</a>
+            </li>
+            <li>
+              <a href="./learnmore.html">security</a>
+            </li>
+            <li>
+              <a href="./learnmore.html">terms</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="footer-col">
+          <h4>follow us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </footer>
+
+
+
+  <script>
+    const ch = document.querySelector('.ch')
+    const mum = document.querySelector('.mum')
+    const del = document.querySelector('.del')
+    const ban = document.querySelector('.ban')
+
+    ch.addEventListener('click', () => {
+      window.location.href = 'chennai.html'
+    })
+
+    mum.addEventListener('click', () => {
+      window.location.href = 'mumbai.html'
+    })
+    del.addEventListener('click', () => {
+      window.location.href = 'delhi.html'
+    })
+    ban.addEventListener('click', () => {
+      window.location.href = 'Bangalore.html'
+    })
+
+  </script>
+
+</body>
+
+</html>

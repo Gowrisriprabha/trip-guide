@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EZStay</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/hotelInfo.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+
+        const checkInInput = document.querySelector(".checkInInput");
+        const checkOutInput = document.querySelector(".checkOutInput");
+        const hotelPriceInDB = document.querySelector(".hotelPriceInDB");
+        const nights = document.querySelector(".nights");
+        const hotelPrice = parseInt(hotelPriceInDB.textContent.replace(/,/g, ''));
+        
+
+
+        function updatePriceAndNights() {
+          const checkInDate = new Date(checkInInput.value);
+          const checkOutDate = new Date(checkOutInput.value);
+         
+
+          const minCheckOutDate = new Date(checkInDate);
+          minCheckOutDate.setDate(checkInDate.getDate() + 1);
+          
+          checkOutInput.min = minCheckOutDate.toISOString().split('T')[0];
+          
+          if (checkOutInput.value < checkOutInput.min) {
+              checkOutInput.value = checkOutInput.min;
+          }
+  
+          console.log(checkInDate);
+          console.log(checkOutDate);
+          
+          // Calculate number of nights
+          const numberOfNights = Math.round((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+  
+          Rooms = document.querySelector(".roomSpan").textContent 
+          console.log(Rooms);
+
+          // Calculate total price
+          const totalPrice = hotelPrice * numberOfNights*Rooms;
+  
+          // Update HTML elements with new values
+          document.querySelector(".total-amt p:last-child").textContent = `₹ ${totalPrice.toLocaleString("en-IN")}`;
+          document.querySelector(".nights").textContent = `${numberOfNights}`;
+          document.querySelector(".amt-before-tax p:last-child").textContent = `₹ ${totalPrice.toLocaleString("en-IN")}`;
+          
+          // document.querySelector(".amt-before-tax p:last-child").textContent = `₹ ${totalPrice.toLocaleString("en-IN")}`;
+          console.log("totaol:",totalPrice);
+  
+          // Send data to backend
+          sendDataToServer(checkInDate, checkOutDate,totalPrice);
+          
+        }
+  
+        // Initial calculation when page loads
+        updatePriceAndNights();
+  
+        // Event listeners for input changes
+        checkInInput.addEventListener("change", updatePriceAndNights);
+        checkOutInput.addEventListener("change", updatePriceAndNights);
+      
+      });
+
+      
+  
+      async function sendDataToServer(checkInDate, checkOutDate,totalPrice) {
+        const dataToSend = {
+          checkIn: checkInDate,
+          checkOut: checkOutDate,
+          totalPrice:totalPrice,
+          
+        };
+  
+        try {
+          const response = await fetch('/hotelInfo', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+          });
+          
+          if (response.ok) {
+            console.log('Data sent successfully');
+          } else {
+            console.error('Failed to send data you want');
+          }
+        } catch (error) {
+          console.error('Error sending data:', error);
+        }
+      }
+
+
+
+
+
+    </script>
+  </head>
+  <body>
+    <!-- Navigation Bar Start -->
+    <nav>
+      <!-- Left side of navigation bar -->
+      <div class="nav-leftside">
+        
+        <a href="/index"><img class="logo" src="images/logo.svg" alt="img" /></a>
+      </div>
+
+      <!-- Right side of navigation bar -->
+      <div class="nav-rightside">
+        
+        <!-- <button class="btn sign-in-btn">Sign in</button> -->
+      </div>
+    </nav>
+    <!-- Navigation Bar End -->
+
+    /* main body start after nav bar */
+    <section class="main-body">
+      <h1>Relax in luxurious comfort and hospitality.</h1>
+      <br />
+
+      <div class="image-container">
+        <img class="img" src=" /myuploads/<%= clickedHotel.imageLinks[0] %>" alt="" />
+        <img class="img" src=" /myuploads/<%= clickedHotel.imageLinks[1] %>" alt="" />
+        <img class="img" src=" /myuploads/<%= clickedHotel.imageLinks[2] %>" alt="" />
+      </div>
+
+      <div class="hotel-Name-Add">
+        <h1 id="hotelName"><%= clickedHotel.hotelName %></h1>
+        <p id="hotelAddress">
+          <span><i class="icons ri-map-pin-line"></i></span><%=
+          clickedHotel.hotelAddress %>
+        </p>
+      </div>
+
+      <div class="info">
+        <div class="info-text">
+          <div class="info-feature-box">
+            <div class="feature-one">
+              <div>
+                <i class="icons ri-parking-box-line"></i>
+              </div>
+              <div>
+                <h3>Park for free</h3>
+                <p>
+                  This is one of the few places in the area with free parking.
+                </p>
+              </div>
+            </div>
+            <div class="feature-one">
+              <div>
+                <i class="icons ri-star-line"></i>
+              </div>
+              <div>
+                <h3>Highly rated property</h3>
+                <p>This is one of the best property in the area.</p>
+              </div>
+            </div>
+            <div class="feature-one">
+              <div>
+                <i class="icons ri-trophy-line"></i>
+              </div>
+              <div>
+                <h3>Experienced staff</h3>
+                <p>Profesional and sxperienced staff of 500 people.</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="info-hotel-para">
+            <p>
+              True to its name, Cowboy Castle is a spacious villa that will
+              transport you to a world like no other. Engulf yourself with
+              breathtaking views of the mountains and soft breeze while here.
+              With wooden interiors and ample space, guests are sure to have a
+              gala time here. What’s more? Guests can enjoy their morning cuppa
+              in the gazebo attached to the lawn amidst lush greenery, making it
+              a delightful retreat indeed!
+            </p>
+          </div>
+
+          <hr />
+
+          <div class="info-whatOffers">
+            <h1>What this place offers</h1>
+            <div class="offers">
+              <div>
+                <div class="offer-one">
+                  <i class="icons ri-wifi-line"></i>
+                  <p>Free WiFi</p>
+                </div>
+                <div class="offer-one">
+                  <i class="fa-solid fa-desktop"></i>
+                  <p>Dedicated workspace</p>
+                </div>
+                <div class="offer-one">
+                  <i class="icons ri-parking-box-line"></i>
+                  <p>Free parking on premises</p>
+                </div>
+                <div class="offer-one">
+                  <i class="icons ri-restaurant-fill"></i>
+                  <p>Breakfast</p>
+                </div>
+              </div>
+              <div>
+                <div class="offer-one">
+                  <i class="icons fa-solid fa-person-swimming"></i>
+                  <p>Swimming Pool</p>
+                </div>
+                <div class="offer-one">
+                  <i class="fa-solid fa-video"></i>
+                  <p>Security cameras</p>
+                </div>
+                <div class="offer-one">
+                  <i class="fa-solid fa-table-columns"></i>
+                  <p>Washing machine</p>
+                </div>
+                <div class="offer-one">
+                  <i class="icons fa-solid fa-ban-smoking"></i>
+                  <p>No Smoking</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+
+          
+        </div>
+        
+        <form action="/booked" method="post">
+        <div class="info-card">
+          <div class="priceCard">
+            <p >
+              <span>₹ </span>
+              <span class="hotelPriceInDB"><%= clickedHotel.hotelPrice.toLocaleString('en-IN')%></span>
+              night
+            </p>
+
+            <div class="three-box">
+              <div class="priceCard-dates">
+                <div id="checkIn">
+                  <label for="">CHECK IN</label>
+                  <input
+                    class="checkInInput"
+                    type="date"
+                    value="<%=checkIn%>"
+                    required
+                  />
+                </div>
+                <div id="checkOut">
+                  <label for="">CHECK OUT</label>
+                  <input
+                    class="checkOutInput"
+                    type="date"
+                    value="<%=checkOut%>"
+                    required
+                  />
+                </div>
+              </div>
+
+              
+              
+
+              </div>
+
+
+              
+              
+              <form class="totalRooms" method="post" action='/search'>
+
+                <!-- <div class="singleBed">
+                  <label for="SBinput">Guests: </label> 
+                  
+                  <input id="guestInput" type="number" value="0"> 
+                  
+                </div> -->
+
+
+                <!-- <div class="rooms">
+                  <label for="rooms-input">Rooms: </label> 
+                  <input class="rooms-input" type="number" value="1"> 
+                </div> -->
+              
+         
+                <!-- <div class="singleBed">
+                  <label for="SBinput">Single Bed: </label> 
+                  <input id="SBinput" type="number" value="0"> 
+                  
+                </div> -->
+              
+             
+                <!-- <div class="doubleBed">
+                  <label for="DBinput">Double Bed: </label>
+                 
+                  <input id="DBinput" type="number" value="0"> 
+                  
+                </div> -->
+              </form>
+              
+            
+            <button>Book</button> 
+
+            <div class="total-amt">
+              <% if (checkOut && checkIn) { %>
+                <p>
+                  ₹ <%= clickedHotel.hotelPrice.toLocaleString('en-IN') %> × <span class="nights"><%=
+                    Math.max(1, Math.round((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24))) %></span> nights
+                  × <span class="roomSpan"><%= typeof Rooms !== 'undefined' ? Rooms : 1 %></span> rooms
+                </p>
+                <p>
+                  ₹ <%= (typeof Rooms !== 'undefined' ? Rooms : 1) * 
+                    (clickedHotel.hotelPrice * Math.max(1, Math.round((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)))) %>
+                </p>
+                
+              <% } else { %>
+              <p>
+                ₹ <%= clickedHotel.hotelPrice.toLocaleString('en-IN') %> × 1
+                night
+              </p>
+              <p>₹ <%= clickedHotel.hotelPrice.toLocaleString('en-IN') %></p>
+              <% } %>
+            </div>
+
+            <div class="amt-before-tax">
+              <p id="txt">Total Amount</p>
+              <% if (checkOut && checkIn) { %>
+              <p>
+                ₹ <%= (Rooms*(clickedHotel.hotelPrice * Math.round((new Date(checkOut)
+                - new Date(checkIn)) / (1000 * 60 * 60 *
+                24)))).toLocaleString('en-IN') %>
+              </p>
+              <% } else {%>
+              <p>₹<%= clickedHotel.hotelPrice.toLocaleString('en-IN') %></p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col">
+            <h4>company</h4>
+            <ul>
+              <li>
+                <a href="./aboutus.html"> about us</a>
+              </li>
+              <li>
+                <a href="./services.html"> our services</a>
+              </li>
+              <li>
+                <a href="./business.html"> work with us</a>
+              </li>
+              <li>
+                <a href="#"> press key</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>get help</h4>
+            <ul>
+              <li>
+                <a href="#">FAQ</a>
+              </li>
+              <li>
+                <a href="#">booking status</a>
+              </li>
+              <li>
+                <a href="#">returns</a>
+              </li>
+              <li>
+                <a href="#">payment options</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>learn more</h4>
+            <ul>
+              <li>
+                <a href="./learnmore.html">privacy</a>
+              </li>
+              <li>
+                <a href="./learnmore.html">security</a>
+              </li>
+              <li>
+                <a href="./learnmore.html">terms</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>follow us</h4>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Inside the HTML body -->
+    <script type="text/javascript">
+      const checkInDate = "<%= checkIn %>";
+      const checkOutDate = "<%= checkOut %>";
+    </script>
+
+    <script type="module" src="hotelInfo.js"></script>
+    <script
+      src="https://kit.fontawesome.com/5050694ff5.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+<!-- .ejs -->

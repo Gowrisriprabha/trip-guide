@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EZStay</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Navigation Bar Start -->
+    <nav>
+      <!-- Left side of navigation bar -->
+      <div class="nav-leftside">
+        <button class="menu"><i class="fa-solid fa-bars"></i></button>
+        <img class="logo" src="images/logo.svg" alt="img" />
+      </div>
+
+      <!-- Right side of navigation bar -->
+      <div class="nav-rightside">
+        <div class="bookmark">
+          <i class="ri-heart-fill"></i>
+        </div>
+
+        <% if (user.username) { %>
+          <button class="btn sign-in-btn"><%= user.username %></button>
+         
+      <% } else { %>
+          <a href="login.html"><button class="btn sign-in-btn">Sign in</button></a>
+      <% } %>
+      </div>
+    </nav>
+    <!-- Navigation Bar End -->
+
+    <!-- Section -->
+    <section class="p1">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div id="item-container">
+          <div class="items-1">
+            <button class="iconbtn-1">
+              <i class="ri-account-circle-fill"></i>
+              <% if (user.username) { %>
+                  <a href="/logout" class="icon-info">Sign out</a>
+              <% } else { %>
+                  <a href="login.html" class="icon-info">Sign in</a>
+              <% } %>
+            </button>
+          </div>
+
+          <div class="items-1">
+            <button class="iconbtn-1">
+              <a href="/userdashboard">
+                <i class="ri-compass-3-fill"></i>
+                <p class="icon-info">Dashboard</p>
+              </a>
+            </button>
+          </div>
+          
+          <div class="items-1">
+            <button class="iconbtn-1">
+              <i class="ri-hotel-line"></i>
+              <p class="icon-info"><a href="#hotels">Hotels</a></p>
+            </button>
+          </div>
+          <div class="items-1">
+            <button class="iconbtn-1">
+              <i class="ri-briefcase-fill"></i>
+              <a href="/business" class="icon-info">Business</a>
+            </button>
+          </div>
+          <div class="items-1">
+            <button class="iconbtn-1">
+              <i class="ri-heart-fill"></i>
+              <p class="icon-info"><a href="tripguide.html">Trips</a></p>
+            </button>
+          </div>
+          
+         
+        </div>
+      </div>
+
+      <!-- Main Page -->
+      <!-- pop up window -->
+      <button class="close-modal hidden">&times;</button>
+      <div class="modal hidden"></div>
+
+      <div class="mainpage">
+        <span>Discover your new favourite stay</span>
+
+        <!-- Search, Date, Time Booking Bar -->
+
+        <!-- ************************************************************************ -->
+        <div class="search">
+          <form action="/search" method="get">
+            <div class="search-bar-divs">
+              <label>Where</label>
+              <input type="text" placeholder="Destination" name="destination" required/>
+            </div>
+        
+            <div class="search-bar-divs">
+              <label>Check in</label>
+              <input id="checkInDate" type="date" placeholder="Add dates" name="checkIn" />
+            </div>
+        
+            <div class="search-bar-divs">
+              <label>Check out</label>
+              <input id="checkOutDate" type="date" placeholder="Add dates" name="checkOut" />
+            </div>
+        
+            <div class="search-bar-divs Who">
+              <label>Rooms</label>
+              <input type="number" placeholder="Rooms" name="Rooms" value="1" min="1"/>
+            </div>
+        
+            <div>
+              <button class="search-logo" type="submit">
+                <i class="ri-search-line"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        
+
+        <!-- ******************************************************************* -->
+
+        <div class="bigImage">
+          <img class="hero-img" src="images/kerala-image.png" alt="" />
+          <p class="bigImage-text">
+            EZStay <br />
+            Where comfort meets clicks, <br />
+            and your dream stay is just <br />
+            a tap away ! <br />
+          </p>
+        </div>
+        <h2>Hotels near you</h2>
+
+      <!-- card-container -->
+<div class="card-container" id="hotels">
+  <% hotels.forEach(hotel => { %>
+      <div class="card">
+          <div class="card-img-scroll">
+              <% hotel.imageLinks.slice(0, 4).forEach(imageLink => { %>
+                  <img class="card-img" src="/myuploads/<%= imageLink %>" alt="Hotel Image" />
+              <% }) %>
+          </div>
+          <button class="card-img-scroll-right">></button>
+          <button class="card-img-scroll-left"><</button>
+          <button class="card-heart">
+              <i class="ri-heart-fill"></i>
+          </button>
+          <div class="card-name">
+              <h4 class='cardHotelName'><%= hotel.hotelName %></h4>
+              <div class="card-rating">
+                  <i class="ri-star-line"></i>
+                  <p><%= hotel.rating %></p>
+              </div>
+          </div>
+          <p><%= hotel.hotelAddress %></p>
+          <p><span>₹ <%= hotel.hotelPrice %></span> per night</p>
+          <span class="card-comment">Fabulous</span>
+      </div>
+  <% }) %>
+</div>
+
+
+        <!-- Drop down on guest in search bar -->
+        <!-- <div class="guest-box">
+          <div class="guest-adult ">
+            <div>
+              <h4>Adult</h4>
+              <p>Ages 13 or above</p>
+            </div>
+
+            <div class="guestIncr">
+              <i class="ri-subtract-line subGuest"></i>
+              <p class="noOfGuest adult">1</p>
+              <i class="ri-add-line addGuest"></i>
+            </div>
+          </div>
+
+          <hr class="hr" />
+
+          <div class="guest-adult ">
+            <div>
+              <h4>Children</h4>
+              <p>Below 13</p>
+            </div>
+
+            <div class="guestIncr">
+              <i class="ri-subtract-line subGuest"></i>
+              <p class="noOfGuest children">1</p>
+              <i class="ri-add-line addGuest"></i>
+            </div>
+          </div>
+
+          <button class="crossCut-guest-box">&times;</button>
+        </div> -->
+      </div>
+
+
+
+
+
+      <!-- <div class="card-container">
+        
+      </div>
+       -->
+      
+      
+      
+    </section>
+    <!-- End of Section -->
+
+
+
+
+
+
+
+
+
+    
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col">
+            <h4>company</h4>
+            <ul>
+              <li>
+                <a href="./aboutus.html"> about us</a>
+              </li>
+              <li>
+                <a href="./services.html"> our services</a>
+              </li>
+              <li>
+                <a href="./business.html"> work with us</a>
+              </li>
+              <li>
+                <a href="#"> press key</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>get help</h4>
+            <ul>
+              <li>
+                <a href="FAQ.html">FAQ</a>
+              </li>
+              <li>
+                <a href="#">booking status</a>
+              </li>
+              <li>
+                <a href="#">returns</a>
+              </li>
+              <li>
+                <a href="#">payment options</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>learn more</h4>
+            <ul>
+              <li>
+                <a href="./learnmore.html">privacy</a>
+              </li>
+              <li>
+                <a href="./learnmore.html">security</a>
+              </li>
+              <li>
+                <a href="./learnmore.html">terms</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>follow us</h4>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Script -->
+    <script>
+     
+      const checkInInput = document.getElementById('checkInDate');
+      const checkOutInput = document.getElementById('checkOutDate');
+  
+     
+      checkInInput.addEventListener('change', function() {
+         
+          const checkInDate = new Date(this.value);
+         
+          const minCheckOutDate = new Date(checkInDate);
+          minCheckOutDate.setDate(checkInDate.getDate() + 1);
+          
+          checkOutInput.min = minCheckOutDate.toISOString().split('T')[0];
+          
+          if (checkOutInput.value < checkOutInput.min) {
+              checkOutInput.value = checkOutInput.min;
+          }
+      });
+  </script>
+
+    <script src="js/script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/5050694ff5.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
